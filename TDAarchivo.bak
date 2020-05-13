@@ -1,15 +1,21 @@
 #lang racket
-;tda archvo de texto plano, el primer elemento será el que represente el nombre del archivo
+(provide(all-defined-out))
+;TDA Archivo
+
+;El primer elemento será el que represente el nombre del archivo
 ;todos los elementos restantes representaran cada linea del texto, a medida que se agreguen
 
-;funcion para asignar el nombre y contenido del archivo, donde el primer argumento representará el nombre
-;todos los argumentos posteriores representan las lineas del texto
-(define (archivoTexto nombreArch . textoArch)
+;constructor
+;crea un archivo, representado en una lista, donde la primera pos. es el nombre, y el resto de elementos son los lineas del archivo
+;dom: varias cadenas de caracteres
+;rec: TDA Archivo
+(define (crearArchivo nombreArch . textoArch)
   (append (list nombreArch) textoArch))
 
 
+;selector
 ;funcion que seleciona el nombre del archivo
-;dominio: una lista de strings
+;dom: TDA Archivo
 ;recorrido: un string
 (define (tomarNombre arch)
   (car arch))
