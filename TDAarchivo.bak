@@ -51,8 +51,8 @@
 ;dom: TDA arch x entero x string
 ;rec: lista
 ;esta funcion permite agregar una fila de caracteres entre la fila n y n-1
-(define (addLine arch n newLine)
-  (append (reverse (tailLine (reverse arch) (- (length arch) (+ n 1)))) (list newLine) (tailLine arch (+ n 1))))
+(define (addLine arch n lineN)
+  (append (reverse (tailLine (reverse arch) (- (length arch) (+ n 1)))) (list lineN) (tailLine arch (+ n 1))))
 
 ;Modificador
 ;dom: TDA archivo
