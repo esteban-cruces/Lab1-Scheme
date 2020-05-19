@@ -22,7 +22,17 @@
   (if (and (= (car workspace) "Workspace") (list? workspace))
       #t
       #f))
- 
+
+;selector
+;dom: TDA workspace x string
+;rec: lista
+;esta funcion entregra los elementos restantes a partir de el atchivo al que pertenesca el nombre ingresado
+;recursion de cola
+(define (tailWorkspace workspace nameArch)
+  (if (equal? nameArch (car (car (cdr workspace))))
+      (cdr workspace)
+      (tailWorkspace (cdr workspace) nameArch)))
+
 ;selector
 ;seleciona un archivo en el workspace
 ;dom: TDA workspace x string (indicando el nombre del archivo)
@@ -41,10 +51,15 @@
   (append workspace arch))
 
 ;modificador
-;funcion que edita un TDA archivo del TDA workspace
-;dom: TDA workspace x string x string
+;funcion que remueve (borra) un TDA archivo del TDA workspace
+;dom: TDA workspace x string
 ;rec: TDA workspace
-(define (editWorkspace workpace nameArch newLine n)
-  (editLine (getArch workspace nameArch) n newLine))
-  
-  
+(define (removeWorkspace workspace nameArch)
+  (append (reverse (cdr (tailWorkspace (reverse workspace) nameArch))) (cdr (tailWorkspace workspace nameArch))))
+      
+;modificador
+;funcion que edita un TDA archivo en un TDA workspace
+;dom: TDA workspace x string x string x entero
+;rec: TDA workspace
+(define (editWorkspace workspace nameArch newLineArch numLine)
+  (append (reverse (cdr (tailWorkspace (reverse workspace) nameArch))) (list (editLine (getArch workspace nameArch) (- numLine 1) newLineArch)) (cdr (tailWorkspace workspace nameArch))))

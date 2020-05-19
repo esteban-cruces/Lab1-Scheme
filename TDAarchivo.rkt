@@ -60,3 +60,10 @@
 ;funcion que permite editar una linea n de informacion del TDA archivo
 (define (editLine arch n lineN)
   (append (reverse (tailLine (reverse arch) (- (length arch) (+ n 1)))) (list lineN) (tailLine arch (+ n 2))))
+
+;modificador
+;dom: TDA archivo x entero
+;rec: TDA archivo
+;esta funcion remueve la linea n de informacion del tda archivo
+(define (removeArch arch n)
+  (append (reverse (tailLine (reverse arch) (- (length arch) n))) (tailLine arch (+ n 1))))
