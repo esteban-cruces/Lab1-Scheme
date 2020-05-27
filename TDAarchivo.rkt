@@ -1,5 +1,6 @@
 #lang racket
 (provide(all-defined-out))
+
 ;TDA Archivo
 
 ;El primer elemento será el que represente el nombre del archivo
@@ -67,3 +68,16 @@
 ;esta funcion remueve la linea n de informacion del tda archivo
 (define (removeArch arch n)
   (append (reverse (tailLine (reverse arch) (- (length arch) n))) (tailLine arch (+ n 1))))
+
+;selector
+;dom: archivo x archivo
+;rec: boolean
+;funcion que compara 2 archivos para ver si son iguales
+(define (compararArch arch1 arch2)
+  (if (= (length arch1) (length arch2))
+      (if (and (null? arch1) (null? arch2))
+          #t
+          (if (equal? (car arch1) (car arch2))
+              (compararArch (cdr arch1) (cdr arch2))
+              #f))
+      #f))

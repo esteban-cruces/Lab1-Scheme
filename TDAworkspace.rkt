@@ -8,7 +8,7 @@
 ;en este tda inicialmente se creará una lista con 1 elemnto "Workspace" a la cual, a medida que se creen TDA Archivo, se le irán agregando a este TDA Workspace
 
 ;constructor
-;dom: tda Archivo
+;dom: null
 ;rec: TDA Workspace
 ;en esta funcion se crea zona de trabajo workspace
 (define (crearWorkspace)
@@ -19,7 +19,7 @@
 ;rec: valor booleano (#t o #f)
 ;vrificar si el archivo pertenece a un TDA Worksapce
 (define (workspace? workspace)
-  (if (and (= (car workspace) "Workspace") (list? workspace))
+  (if (and (equal? (car workspace) "Workspace") (list? workspace))
       #t
       #f))
 
@@ -39,9 +39,11 @@
 ;rec: TDA archivo
 ;recursion: de cola
 (define (getArch workspace nameArch)
-   (if (equal? nameArch (car (car (cdr workspace))))
-      (car (cdr workspace))
-      (getArch (cdr workspace) nameArch)))
+  (if (null? (cdr workspace))
+      null
+      (if (equal? nameArch (car (car (cdr workspace))))
+          (car (cdr workspace))
+          (getArch (cdr workspace) nameArch))))
 
 ;modificador
 ;funcion que agrega un TDA archivo a un TDA workspace
@@ -63,3 +65,15 @@
 ;rec: TDA workspace
 (define (editWorkspace workspace nameArch newLineArch numLine)
   (append (reverse (cdr (tailWorkspace (reverse workspace) nameArch))) (list (editLine (getArch workspace nameArch) (- numLine 1) newLineArch)) (cdr (tailWorkspace workspace nameArch))))
+
+;modificador
+;dom: workspace x repositorioRemoto
+;rec: workspace
+;objetivo: retorna una lista con todos los cambios (commits) desde el RemoteRepository al Workspace
+;(define pull (lambda (remoteRepository)
+ ;              (lambda (workspace))))
+                 
+
+
+
+
