@@ -25,11 +25,11 @@
       #f))
 
 ;modificador
-;dom: TDA index x TDA archivo x entero x string
+;dom: TDA index x TDA workspace x string x entero x string
 ;rec: lista de TDA commit
 ;funcion agrega los cambios hechos en un TDA archivo en el index
-(define (addChangeIndex index archivo numLine newLine)
-  (append index (list(list archivo numLine newLine))))
+(define (addChangeIndex index workspace nameArch numLine newLine)
+  (append index (list(list workspace (date->string (current-date) second) nameArch numLine newLine))))
 
 ;modificador
 ;dom: 
@@ -42,3 +42,9 @@
   (if (null? (cdr index))
       (append index (list (cdr workspace)))
       #t))
+
+
+
+
+  
+  

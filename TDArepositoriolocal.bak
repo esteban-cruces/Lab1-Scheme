@@ -22,3 +22,10 @@
       #t
       #f))
 
+;modificador
+;dom: TDA local repository x TDA index 
+;rec: TDA local repository
+;objetivo: añadir commits al repositorio local
+(define commit (lambda (localRepository)
+                 (lambda (index)
+                   (append list localRepository index))))

@@ -67,11 +67,13 @@
   (append (reverse (cdr (tailWorkspace (reverse workspace) nameArch))) (list (editLine (getArch workspace nameArch) (- numLine 1) newLineArch)) (cdr (tailWorkspace workspace nameArch))))
 
 ;modificador
-;dom: workspace 
+;dom: workspace x repositorioRemoto
 ;rec: workspace
-;objetivo: elimina el primer archivo presente en el workspace
-(define (deleteFirstArch workspace)
-  (append (list "Workspace") (cddr workspace)))
+;objetivo: retorna una lista con todos los cambios (commits) desde el RemoteRepository al Workspace
+;(define pull (lambda (remoteRepository)
+ ;              (lambda (workspace))))
+                 
 
 
- 
+
+

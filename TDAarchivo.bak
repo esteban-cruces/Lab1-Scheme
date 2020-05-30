@@ -53,9 +53,7 @@
 ;rec: lista
 ;esta funcion permite agregar una fila de caracteres entre la fila n y n-1
 (define (addLine arch n newLine)
-  (if (= n (length arch))
-      (append arch (cons newLine null))
-      (append (reverse (tailLine (reverse arch) (- (length arch) (+ n 1)))) (list newLine) (tailLine arch (+ n 1)))))
+  (append (reverse (tailLine (reverse arch) (- (length arch) (+ n 1)))) (list newLine) (tailLine arch (+ n 1))))
 
 ;Modificador
 ;dom: TDA archivo
@@ -83,35 +81,3 @@
               (compararArch (cdr arch1) (cdr arch2))
               #f))
       #f))
-
-;selector
-;dom: archivo
-;rec: string
-;objetivo: ver si una fila pertenece al archivo
-(define (getLineBool archivo line)
-  (if (null? archivo)
-      #f
-      (if (equal? (car archivo) line)
-          #t
-          (getLineBool (cdr archivo) line))))
-
-;selector
-;dom: archivo x entero x string
-;rec: entero
-;objetivo: selecciona la posicion de una linea
-(define (numLine archivo n line)
-  (if (null? archivo)
-      n
-      (if (equal? (car archivo) line)
-          (+ 1 n)
-          (numLine (cdr archivo) (+ n 1) line))))
-
-;modificador
-;dom: archivo x entero
-;rec: archivo
-;objetivo: poner un entero entre cada linea, indicando que linea del archivo es
-(define (addNumArch archivo n lista)
-  (if (null? archivo)
-      lista
-      (addNumArch (cdr archivo) (+ n 1) (append lista (cons (car archivo) null) (cons n null)))))
-

@@ -11,15 +11,15 @@
 ;dom: archivo x entero x string
 ;rec: TDA cambio
 ;objetivo: crear una TDA cambio
-(define (crearCambio nombreArchivo num newLine)
-  (list nombreArchivo num newLine))
+(define (crearCambio archivo num newLine)
+  (list archivo (list num) (list newLine) (date->string (current-date) second)))
 
 ;pertenencia
 ;dom: cambio
 ;rec: bollean
 ;objetivo: verificar si una lista pertenece a un TDA cambio
 (define (cambio? cambio)
-  (and (= (length cambio) 3) (string? (car cambio))))
+  (and (= (length cambio) 3) (archivo? (car cambio))))
 
 ;selector
 ;dom: cambio
@@ -42,13 +42,4 @@
 (define (getNewLineCambio cambio)
   (caddr cambio))
 
-;operador
-;dom: archivo x archivo x lista x entero (0)
-;rec: lista de cambios
-;objetivo: crear una lista de cambios de un archivo completo
-(define (crearListaCambiosArch archivo archivo2 lista)
-  (if (null? archivo2)
-      lista
-      (crearListaCambiosArch archivo (cddr archivo2) (append lista (list (crearCambio (getName archivo) (cadr archivo2) (car archivo2)))))))
-
-
+      
