@@ -129,3 +129,18 @@
                           null)))))
 
 ;--------------------------------------COMMIT----------------------------------------------------------------------
+;dom: string x zonas
+;rec: zonas
+;objetivo: subir los cambios del index al repository Local, como commit, con un mensaje
+(define commit (lambda (nombreCommit)
+                 (lambda (zonas)
+                   (crearZonas (getWorkspace zonas) (createIndex) (append (getRepositoryL zonas) (list nombreCommit) (cdr (getIndex zonas))) (getRepositoryR zonas) (append (getHistorial zonas) (list (date->string (current-date) second) "COMMIT"))))))
+
+;---------------------------------------PUSH------------------------------------------------------------------------
+;dom: zonas
+;rec: zonas
+;objetivo: subir los commit guardados en el repositorio local al reposirotio remoto
+(define push (lambda (zonas)
+               (crearZonas (getWorkspace zonas) (getIndex zonas) (crearRepositoryL) (append (getRepositoryR zonas) (cdr (getRepositoryL zonas))) (append (getHistorial zonas) (list (date->string (current-date) second) "PUSH")))))
+
+;----------------------------------------ZONAS->STRING--------------------------------------------------------------
