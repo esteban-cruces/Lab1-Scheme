@@ -1,0 +1,15 @@
+Requisitos no funcionales
+	-(1 pts) funciones comentadas: 1
+	-(0.75 pts) TDA's separados: 0.75
+	-(2.5 pts) Repositorio Github (commits): 1
+TOTAL: 5.25/5.5
+
+Requisitos Funcionales obligatorios
+	-(0.5)implementar abstracciones apropiadas: 1
+	-(0.5)git: 1 
+	-(0.5)pull: 1
+	-(1.0)add: 1
+	-(0.5)commit: 1
+	-(0.5)push: 1
+	-(0.5)zonas->string: 1
+TOTAL: 4/4

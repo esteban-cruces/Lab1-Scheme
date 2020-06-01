@@ -1,0 +1,20 @@
+Consideraciones----------------------------------------------------
+
+- Tener en cuenta que antes de ejecutar cualquier comando, se deben tener las diferentes zonas "creadas".
+
+Manual de uso------------------------------------------------------
+
+- Definir la cantidad que se quiera de archivos con la funcion “(createArchivo archivo linea1 linea2 … linesN)”.
+- definir las zonas con sus respectivas funciones: 
+	-“(crearWorkspace)”.
+	-“(createIndex)”.
+	-“(crearRepositoryL)”.
+	-“(crearRepositoryR)”.
+- Agregar los archivos al workspace con la funcion: “(addWorkspace archivo1 archivo2 … archivoN)”.
+- Crear la zonas: “(crearZonas workspace index locarRepository remoteRepository historial)”.
+- Aplicar los distintos comandos que se requieran:
+	-“(((git add)listaConNombresDeArchivos))zonas)”.
+	-“(((git commit) “nombreCommit” )zonas)”.
+	-“((git push)zonas)”.
+	-“((git pull)zonas)”.
+- Finalmente, aplicar la funcion “(zonas->string zonas)”. En la funcion "display" para mostrar el proceso de las zonas.

@@ -16,7 +16,7 @@
 ;consta de una lista con 5 elementos, el primero el workspace, segundo index, tercero local repository,  cuarto remote repository y el ultimo un historial de comandos aplicados
 
 ;constructor
-;dom: TDAworspace x TDAindex x TDAlocalRepository x TDAremoteRepository x lista
+;dom: TDAworspace x TDAindex x TDAlocalRepository x TDAremoteRepository 
 ;rec: TDA zonas, esta es una lista con las 4 zonas de git
 ;objetivo: crear una "zona" que contenga todas las zonas
 (define (crearZonas worspace index localRepository remoteRepository historial)
@@ -144,3 +144,93 @@
                (crearZonas (getWorkspace zonas) (getIndex zonas) (crearRepositoryL) (append (getRepositoryR zonas) (cdr (getRepositoryL zonas))) (append (getHistorial zonas) (list (date->string (current-date) second) "PUSH")))))
 
 ;----------------------------------------ZONAS->STRING--------------------------------------------------------------
+;dom: zonas
+;rec: string
+;objetivo: entregar una representación de las zonas como un string posible de visualizar de forma comprensible al usuario.
+(define zonas->string (lambda (zonas)
+                        (string-append ((workspaceString (getWorkspace zonas))"") ((indexString (getIndex zonas))"") ((repositoryLString (getRepositoryL zonas))"") ((repositoryRString (getRepositoryR zonas))"") ((historialString (getHistorial zonas))""))))
+                        
+;dom: workspace x string
+;rec: string 
+;objetivo: pasar el worksspace a un string comprencible por el usuario
+;recursion de cola
+(define workspaceString (lambda (workspace)
+                          (lambda (string)
+                            (if (null? workspace)
+                                string
+                                (if (equal? "" string)
+                                    ((workspaceString (cdr workspace))"----------WORKSPACE---------- \n")
+                                    ((workspaceString (cdr workspace))(string-append string (((archivoString (car workspace))"")1)"\n")))))))
+
+;dom: archivo x string x entero
+;rec: string
+;objetivo: transformas un archivo a un string
+;recursion de cola
+(define archivoString (lambda (archivo)
+                        (lambda (string)
+                          (lambda (num)
+                            (if (null? archivo)
+                                string
+                                (((archivoString (cdr archivo))(string-append string (number->string num) " " (car archivo) " \n"))(+ num 1 )))))))
+                                  
+;dom: index x string
+;rec: string
+;objetivo: pasar el index a un string comprencible por el usuario
+;recursion de cola
+(define indexString (lambda (index)
+                          (lambda (string)
+                            (if (null? index)
+                                string
+                                (if (equal? "" string)
+                                    ((indexString (cdr index))"----------INDEX---------- \n")
+                                    ((indexString (cdr index))(string-append string ((cambioString (car index))"") "\n")))))))
+
+;dom: cambios x string
+;rec: string
+;objetivo: transformar un cambio a string
+(define cambioString (lambda (cambio)
+                        (lambda (string)
+                          (string-append string (getArchCambio cambio) ", linea: " (number->string (getNumLineCambio cambio)) ", el cambio es: " (getNewLineCambio cambio)))))
+
+;dom: Local Repository x string
+;rec: string
+;objetivo: pasar el Local Repository a un string comprencible por el usuario
+;recursion de cola
+(define repositoryLString (lambda (repositoryL)
+                          (lambda (string)
+                            (if (null? repositoryL)
+                                string
+                                (if (equal? "" string)
+                                    ((repositoryLString (cdr repositoryL))"----------LOCAL-REPOSITORY---------- \n")
+                                    (if (string? (car repositoryL))
+                                        ((repositoryLString (cdr repositoryL))(string-append string "--" (car repositoryL) "-- \n"))
+                                        ((repositoryLString (cdr repositoryL))(string-append string ((cambioString (car repositoryL))"") " \n"))))))))
+
+;dom: Remote Repository x string
+;rec: string
+;objetivo: pasar el Remote Repository a un string comprencible por el usuario
+;recursion de cola
+(define repositoryRString (lambda (repositoryR)
+                          (lambda (string)
+                            (if (null? repositoryR)
+                                string
+                                (if (equal? "" string)
+                                    ((repositoryRString (cdr repositoryR))"----------REMOTE-REPOSITORY---------- \n")
+                                    (if (string? (car repositoryR))
+                                        ((repositoryRString (cdr repositoryR))(string-append string "--" (car repositoryR) "-- \n"))
+                                        ((repositoryRString (cdr repositoryR))(string-append string ((cambioString (car repositoryR))"") " \n"))))))))
+
+;dom: historial x string
+;rec: string
+;objetivo: pasar el historial a un string entendible por el usuario
+(define historialString (lambda (historial)
+                          (lambda (string)
+                            (if (null? historial)
+                                string
+                                (if (string? historial)
+                                    "----------HISTORIAL-------- \n"
+                                    (if (equal? "" string)
+                                        ((historialString (cdr historial))"----------HISTORIAL-------- \n")
+                                        ((historialString (cddr historial))(string-append string "Fecha: " (car historial) ", el comando ejecutado fue: " (cadr historial) "\n"))))))))
+
+
